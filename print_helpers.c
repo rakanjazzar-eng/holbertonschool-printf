@@ -31,6 +31,36 @@ int print_string(char *str)
 		write(1, &str[i], 1);
 		i++;
 	}
-
 	return (i);
+}
+/**
+ * print_number - prints an integer
+ * @n: integer to print
+ *
+ * Return: number of characters printed
+ */
+int print_number(int n)
+{
+	int count;
+	unsigned int num;
+
+	count = 0;
+
+
+	if (n < 0)
+	{
+		print_char('-');
+		count++;
+		num = -n;
+}
+	else
+	{
+		num = n;
+	}
+	if (num / 10)
+		count += print_number(num / 10);
+count += print_char((num % 10) + '0');
+
+	return (count);
+
 }
