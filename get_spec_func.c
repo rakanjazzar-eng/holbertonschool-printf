@@ -1,31 +1,33 @@
 #include "main.h"
 
 /**
- * get_spec_func - selects function according to specifier
- * @spec: conversion specifier
+ * get_spec_func - Selects the correct function to perform the operation
+ * @spec: The specifier character
  *
- * Return: pointer to printing function or NULL
+ * Return: Pointer to the function or NULL
  */
 int (*get_spec_func(char spec))(va_list)
 {
-	if (spec == 'c')
-		return (print_char);
-	if (spec == 's')
-		return (print_string);
-	if (spec == '%')
-		return (print_percent);
-	if (spec == 'd' || spec == 'i')
-		return (print_int);
-	if (spec == 'b')
-		return (print_binary);
-	if (spec == 'u')
-		return (print_unsigned);
-	if (spec == 'o')
-		return (print_octal);
-	if (spec == 'x')
-		return (print_hex_low);
-	if (spec == 'X')
-		return (print_hex_up);
+	spec_t specs[] = {
+		{"c", print_char},
+		{"s", print_string},
+		{"%", print_percent},
+		{"d", print_int},
+		{"i", print_int},
+		{"b", print_binary},
+		{"u", print_unsigned},
+		{"o", print_octal},
+		{"x", print_hex_low},
+		{"X", print_hex_up},
+		{NULL, NULL}
+	};
+	int i = 0;
 
+	while (specs[i].spec != NULL)
+	{
+		if (specs[i].spec[0] == spec)
+			return (specs[i].f);
+		i++;
+	}
 	return (NULL);
 }

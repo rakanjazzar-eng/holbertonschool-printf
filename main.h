@@ -5,6 +5,11 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+/**
+ * struct specifier - Structure to map specifiers with printing functions
+ * @spec: The conversion specifier (e.g., 'c', 's')
+ * @f: Pointer to the corresponding function
+ */
 typedef struct specifier
 {
 	char *spec;
@@ -12,7 +17,6 @@ typedef struct specifier
 } spec_t;
 
 int _printf(const char *format, ...);
-
 int print_char(va_list args);
 int print_string(va_list args);
 int print_percent(va_list args);
@@ -22,7 +26,6 @@ int print_unsigned(va_list args);
 int print_octal(va_list args);
 int print_hex_low(va_list args);
 int print_hex_up(va_list args);
-
 int (*get_spec_func(char spec))(va_list);
 
-#endif
+#endif /* MAIN_H */
