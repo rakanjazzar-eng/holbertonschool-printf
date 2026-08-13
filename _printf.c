@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
  * _printf - prints formatted output
  * @format: format string
@@ -14,12 +13,9 @@ int _printf(const char *format, ...)
 
 	if (format == NULL)
 		return (-1);
-
 	va_start(args, format);
-
 	i = 0;
 	count = 0;
-
 	while (format[i] != '\0')
 	{
 		if (format[i] != '%')
@@ -29,13 +25,11 @@ int _printf(const char *format, ...)
 		else
 		{
 			i++;
-
 			if (format[i] == '\0')
 			{
 				va_end(args);
 				return (-1);
 			}
-
 			if (format[i] == 'c')
 				count += print_char(va_arg(args, int));
 			else if (format[i] == 's')
@@ -44,17 +38,16 @@ int _printf(const char *format, ...)
 				count += print_char('%');
 			else if (format[i] == 'd' || format[i] == 'i')
 				count += print_number(va_arg(args, int));
+			else if (format[i] == 'b')
+				count += print_binary(va_arg(args, unsigned int));
 			else
 			{
 				count += print_char('%');
 				count += print_char(format[i]);
 			}
 		}
-
 		i++;
 	}
-
 	va_end(args);
-
 	return (count);
 }
