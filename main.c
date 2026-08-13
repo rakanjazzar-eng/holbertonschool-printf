@@ -1,23 +1,23 @@
-#include <stdio.h>
 #include <limits.h>
+#include <stdio.h>
 #include "main.h"
 
 /**
- * main - Entry point for testing _printf
+ * main - Entry point
  *
  * Return: Always 0
  */
 int main(void)
 {
-	int len1, len2;
+	unsigned int ui = (unsigned int)INT_MAX + 1024;
 
-	len1 = _printf("Mine: %d, %i\n", 1024, -1024);
-	len2 = printf("Orig: %d, %i\n", 1024, -1024);
-	printf("Lengths: [%d, %d]\n\n", len1, len2);
-
-	len1 = _printf("Mine Zero & Min: %d, %d\n", 0, INT_MIN);
-	len2 = printf("Orig Zero & Min: %d, %d\n", 0, INT_MIN);
-	printf("Lengths: [%d, %d]\n", len1, len2);
-
+	_printf("u:[%u]\n", ui);
+	printf("u:[%u]\n", ui);
+	_printf("o:[%o]\n", ui);
+	printf("o:[%o]\n", ui);
+	_printf("x:[%x]\n", ui);
+	printf("x:[%x]\n", ui);
+	_printf("X:[%X]\n", ui);
+	printf("X:[%X]\n", ui);
 	return (0);
 }
