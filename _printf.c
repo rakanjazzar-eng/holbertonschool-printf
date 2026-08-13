@@ -1,28 +1,25 @@
 #include "main.h"
+
 /**
- * _printf - prints formatted output
- * @format: format string
+ * _printf - Formatted output conversion and print
+ * @format: Input string format
  *
- * Return: number of characters printed
+ * Return: Total characters printed
  */
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int i;
-	int count;
+	int i = 0, count = 0;
+	int (*func)(va_list);
 
 	if (format == NULL)
 		return (-1);
+
 	va_start(args, format);
-	i = 0;
-	count = 0;
-	while (format[i] != '\0')
+
+	while (format && format[i])
 	{
-		if (format[i] != '%')
-		{
-			count += print_char(format[i]);
-		}
-		else
+		if (format[i] == '%')
 		{
 			i++;
 			if (format[i] == '\0')
@@ -30,24 +27,25 @@ int _printf(const char *format, ...)
 				va_end(args);
 				return (-1);
 			}
-			if (format[i] == 'c')
-				count += print_char(va_arg(args, int));
-			else if (format[i] == 's')
-				count += print_string(va_arg(args, char *));
-			else if (format[i] == '%')
-				count += print_char('%');
-			else if (format[i] == 'd' || format[i] == 'i')
-				count += print_number(va_arg(args, int));
-			else if (format[i] == 'b')
-				count += print_binary(va_arg(args, unsigned int));
+
+			func = get_spec_func(format[i]);
+			if (func != NULL)
+			{
+				count += func(args);
+			}
 			else
 			{
-				count += print_char('%');
-				count += print_char(format[i]);
+				count += write(1, "%", 1);
+				count += write(1, &format[i], 1);
 			}
+		}
+		else
+		{
+			count += write(1, &format[i], 1);
 		}
 		i++;
 	}
+
 	va_end(args);
 	return (count);
 }

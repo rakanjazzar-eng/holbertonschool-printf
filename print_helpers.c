@@ -1,66 +1,75 @@
-#include "main.h"
+include "main.h"
 
 /**
- * print_char - prints one character
- * @c: character to print
- *
+ * print_unsigned - prints an unsigned integer
+ * @n: unsigned integer to print
  * Return: number of characters printed
  */
-int print_char(char c)
+int print_unsigned(unsigned int n)
 {
-	return (write(1, &c, 1));
+    int count = 0;
+    char c;
+
+    if (n / 10)
+        count += print_unsigned(n / 10);
+    
+    c = (n % 10) + '0';
+    count += write(1, &c, 1);
+    return (count);
 }
 
 /**
- * print_string - prints a string
- * @str: string to print
- *
+ * print_octal - prints an unsigned int in octal format
+ * @n: unsigned integer to print
  * Return: number of characters printed
  */
-int print_string(char *str)
+int print_octal(unsigned int n)
 {
-	int i;
+    int count = 0;
+    char c;
 
-	if (str == NULL)
-		str = "(null)";
-
-	i = 0;
-
-	while (str[i] != '\0')
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
-	return (i);
+    if (n / 8)
+        count += print_octal(n / 8);
+    
+    c = (n % 8) + '0';
+    count += write(1, &c, 1);
+    return (count);
 }
+
 /**
- * print_number - prints an integer
- * @n: integer to print
- *
+ * print_hex_low - prints an unsigned int in lowercase hex
+ * @n: unsigned integer to print
  * Return: number of characters printed
  */
-int print_number(int n)
+int print_hex_low(unsigned int n)
 {
-	int count;
-	unsigned int num;
+    int count = 0;
+    char c;
+    char *hex = "0123456789abcdef";
 
-	count = 0;
-
-
-	if (n < 0)
-	{
-		print_char('-');
-		count++;
-		num = -n;
+    if (n / 16)
+        count += print_hex_low(n / 16);
+    
+    c = hex[n % 16];
+    count += write(1, &c, 1);
+    return (count);
 }
-	else
-	{
-		num = n;
-	}
-	if (num / 10)
-		count += print_number(num / 10);
-count += print_char((num % 10) + '0');
 
-	return (count);
+/**
+ * print_hex_upp - prints an unsigned int in uppercase hex
+ * @n: unsigned integer to print
+ * Return: number of characters printed
+ */
+int print_hex_upp(unsigned int n)
+{
+    int count = 0;
+    char c;
+    char *hex = "0123456789ABCDEF";
 
+    if (n / 16)
+        count += print_hex_upp(n / 16);
+    
+    c = hex[n % 16];
+    count += write(1, &c, 1);
+    return (count);
 }
